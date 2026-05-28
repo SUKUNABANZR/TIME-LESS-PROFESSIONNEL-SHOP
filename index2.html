@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIME LESS STORE PRO</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f3f4f6;
+color:#111827;
+}
+
+header{
+background:#111827;
+padding:15px 5%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+font-size:28px;
+font-weight:700;
+color:white;
+}
+
+.logo span{
+color:#f59e0b;
+}
+
+.search-box{
+width:45%;
+display:flex;
+}
+
+.search-box input{
+width:100%;
+padding:13px;
+border:none;
+outline:none;
+border-radius:8px 0 0 8px;
+}
+
+.search-box button{
+padding:13px 18px;
+border:none;
+background:#f59e0b;
+color:white;
+font-weight:bold;
+border-radius:0 8px 8px 0;
+cursor:pointer;
+}
+
+.top-actions{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.cart-btn,
+.admin-btn{
+background:#f59e0b;
+color:white;
+padding:12px 18px;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+}
+
+.hero{
+height:350px;
+background:
+linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+url('https://images.unsplash.com/photo-1441986300917-64674bd600d8');
+background-size:cover;
+background-position:center;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+}
+
+.hero h1{
+font-size:55px;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.products-section{
+padding:50px 5%;
+}
+
+.section-title{
+font-size:35px;
+margin-bottom:30px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.card-content{
+padding:18px;
+}
+
+.card-title{
+font-size:18px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.price{
+font-size:24px;
+font-weight:700;
+color:#f59e0b;
+margin-bottom:15px;
+}
+
+.actions{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.qty{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.qty button{
+width:35px;
+height:35px;
+border:none;
+background:#111827;
+color:white;
+font-size:20px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.buttons{
+display:flex;
+gap:10px;
+}
+
+.add-cart{
+flex:1;
+padding:12px;
+border:none;
+background:#f59e0b;
+color:white;
+font-weight:600;
+border-radius:10px;
+cursor:pointer;
+}
+
+.delete-btn{
+background:red;
+color:white;
+border:none;
+padding:12px;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.cart-panel{
+position:fixed;
+right:-450px;
+top:0;
+width:400px;
+height:100%;
+background:white;
+padding:25px;
+box-shadow:-10px 0 30px rgba(0,0,0,0.2);
+transition:0.4s;
+overflow-y:auto;
+z-index:2000;
+}
+
+.cart-panel.active{
+right:0;
+}
+
+.cart-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.close-cart{
+font-size:30px;
+cursor:pointer;
+}
+
+.cart-item{
+display:flex;
+gap:15px;
+background:#f9fafb;
+padding:10px;
+border-radius:12px;
+margin-bottom:15px;
+}
+
+.cart-item img{
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.total{
+font-size:25px;
+font-weight:700;
+margin-top:20px;
+}
+
+.checkout{
+width:100%;
+padding:15px;
+background:#10b981;
+color:white;
+border:none;
+font-size:18px;
+border-radius:12px;
+margin-top:20px;
+cursor:pointer;
+}
+
+.admin-panel{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:3000;
+}
+
+.admin-box{
+background:white;
+padding:30px;
+width:90%;
+max-width:500px;
+border-radius:20px;
+}
+
+.admin-box h2{
+margin-bottom:20px;
+}
+
+.admin-box input{
+width:100%;
+padding:15px;
+margin-bottom:15px;
+border:1px solid #ddd;
+border-radius:10px;
+outline:none;
+}
+
+.admin-box button{
+width:100%;
+padding:15px;
+background:#111827;
+color:white;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+
+footer{
+background:#111827;
+color:white;
+padding:30px;
+text-align:center;
+margin-top:50px;
+}
+
+@media(max-width:900px){
+
+.search-box{
+display:none;
+}
+
+.hero h1{
+font-size:38px;
+}
+
+.cart-panel{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<header>
+
+<div class="logo">
+TIME <span>LESS</span>
+</div>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Rechercher un article...">
+<button>🔍</button>
+</div>
+
+<div class="top-actions">
+
+<div class="admin-btn" onclick="openAdminLogin()">
+ADMIN
+</div>
+
+<div class="cart-btn" onclick="toggleCart()">
+🛒 Panier (<span id="cart-count">0</span>)
+</div>
+
+</div>
+
+</header>
+
+<section class="hero">
+<div>
+<h1>TIME LESS STORE</h1>
+<p>Le luxe à portée de main</p>
+</div>
+</section>
+
+<section class="products-section">
+<h2 class="section-title">Nos Produits</h2>
+<div class="products" id="products"></div>
+</section>
+
+<div class="cart-panel" id="cartPanel">
+
+<div class="cart-header">
+<h2>Votre Panier</h2>
+<div class="close-cart" onclick="toggleCart()">×</div>
+</div>
+
+<div id="cart-items"></div>
+
+<div class="total">
+Total : <span id="total">0</span> FCFA
+</div>
+
+<button class="checkout">
+Commander
+</button>
+
+</div>
+
+<div class="admin-panel" id="adminPanel">
+
+<div class="admin-box">
+
+<h2>Connexion Admin</h2>
+
+<input type="password" id="adminPassword" placeholder="Code Admin">
+
+<button onclick="loginAdmin()">
+Se connecter
+</button>
+
+<hr style="margin:25px 0;">
+
+<input type="text" id="productName" placeholder="Nom du produit">
+
+<input type="number" id="productPrice" placeholder="Prix du produit">
+
+<input type="text" id="productImage" placeholder="Lien image du produit">
+
+<button onclick="addProduct()">
+Ajouter le produit
+</button>
+
+<br><br>
+
+<button onclick="closeAdmin()" style="background:red;">
+Fermer
+</button>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 TIME LESS STORE — Tous droits réservés
+</footer>
+
+<script>
+
+let cart = [];
+let isAdmin = false;
+
+let products = [
+{
+name:'Sneakers Premium',
+price:35000,
+image:'https://images.unsplash.com/photo-1542291026-7eec264c27ff'
+},
+{
+name:'Montre Luxe',
+price:45000,
+image:'https://images.unsplash.com/photo-1523275335684-37898b6baf30'
+},
+{
+name:'T-Shirt Elite',
+price:15000,
+image:'https://images.unsplash.com/photo-1521572267360-ee0c2909d518'
+}
+];
+
+function saveProducts(){
+localStorage.setItem('timelessProducts',JSON.stringify(products));
+}
+
+function loadSavedProducts(){
+
+let saved = localStorage.getItem('timelessProducts');
+
+if(saved){
+products = JSON.parse(saved);
+}
+
+}
+
+function renderProducts(){
+
+let container = document.getElementById('products');
+
+container.innerHTML = '';
+
+products.forEach((product,index)=>{
+
+container.innerHTML += `
+
+<div class="card">
+
+<img src="${product.image}">
+
+<div class="card-content">
+
+<h3 class="card-title">${product.name}</h3>
+
+<div class="price">${product.price} FCFA</div>
+
+<div class="actions">
+
+<div class="qty">
+<button onclick="decrease(this)">-</button>
+<span class="quantity">1</span>
+<button onclick="increase(this)">+</button>
+</div>
+
+<div class="buttons">
+
+<button class="add-cart"
+onclick="addToCart('${product.name}',${product.price},'${product.image}',this)">
+Ajouter
+</button>
+
+${isAdmin ? `
+
+<button class="delete-btn"
+onclick="deleteProduct(${index})">
+Supprimer
+</button>
+
+` : ''}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+function increase(btn){
+
+let qty = btn.parentElement.querySelector('.quantity');
+qty.innerText = parseInt(qty.innerText)+1;
+
+}
+
+function decrease(btn){
+
+let qty = btn.parentElement.querySelector('.quantity');
+
+if(parseInt(qty.innerText)>1){
+qty.innerText = parseInt(qty.innerText)-1;
+}
+
+}
+
+function addToCart(name,price,image,btn){
+
+let quantity = parseInt(
+btn.parentElement.parentElement
+.querySelector('.quantity').innerText
+);
+
+cart.push({
+name,
+price,
+image,
+quantity
+});
+
+updateCart();
+
+}
+
+function updateCart(){
+
+let cartItems = document.getElementById('cart-items');
+let total = 0;
+
+cartItems.innerHTML = '';
+
+cart.forEach(item=>{
+
+let subtotal = item.price * item.quantity;
+
+total += subtotal;
+
+cartItems.innerHTML += `
+
+<div class="cart-item">
+
+<img src="${item.image}">
+
+<div>
+<h4>${item.name}</h4>
+<p>${item.quantity} x ${item.price} FCFA</p>
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById('total').innerText = total;
+document.getElementById('cart-count').innerText = cart.length;
+
+}
+
+function toggleCart(){
+
+document.getElementById('cartPanel')
+.classList.toggle('active');
+
+}
+
+function openAdminLogin(){
+
+document.getElementById('adminPanel').style.display='flex';
+
+}
+
+function closeAdmin(){
+
+document.getElementById('adminPanel').style.display='none';
+
+}
+
+function loginAdmin(){
+
+let password = document.getElementById('adminPassword').value;
+
+if(password === 'TIMELESS2026'){
+
+isAdmin = true;
+
+alert('Connexion Admin Réussie');
+
+renderProducts();
+
+}else{
+
+alert('Code incorrect');
+
+}
+
+}
+
+function addProduct(){
+
+if(!isAdmin){
+alert('Accès refusé');
+return;
+}
+
+let name = document.getElementById('productName').value;
+let price = document.getElementById('productPrice').value;
+let image = document.getElementById('productImage').value;
+
+if(name==='' || price==='' || image===''){
+alert('Remplis tous les champs');
+return;
+}
+
+products.push({
+name,
+price,
+image
+});
+
+saveProducts();
+renderProducts();
+
+alert('Produit ajouté');
+
+}
+
+function deleteProduct(index){
+
+if(!isAdmin){
+alert('Accès refusé');
+return;
+}
+
+let confirmDelete = confirm('Supprimer ce produit ?');
+
+if(confirmDelete){
+
+products.splice(index,1);
+
+saveProducts();
+
+renderProducts();
+
+}
+
+}
+
+loadSavedProducts();
+renderProducts();
+
+/* RECHERCHE */
+
+document.getElementById('searchInput')
+.addEventListener('keyup',function(){
+
+let value = this.value.toLowerCase();
+let cards = document.querySelectorAll('.card');
+
+cards.forEach(card=>{
+
+let title = card.querySelector('.card-title')
+.innerText.toLowerCase();
+
+if(title.includes(value)){
+card.style.display='block';
+}else{
+card.style.display='none';
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
